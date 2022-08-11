@@ -40,15 +40,16 @@
                             </div>
                     </div>
                     <br><br>
-                    <div  class="d-flex justify-content-around ">
+                    <div  class="button-group">
                         <button type="button" class="btn btn-primary" v-on:click="editar()">Editar</button>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-danger" v-on:click="eliminar()">Eliminar</button>
                         <button type="button" class="btn btn-dark" v-on:click="salir()">Salir</button>
                     </div>
+                    <br><br>
 
                 </form>
             </div>   
-        <Footer />
+          
     </div>
 
 </template>
@@ -88,6 +89,16 @@ export default {
         },
         salir(){
             this.$router.push("/dashboard");
+        },
+        eliminar(){
+            var enviar = {
+                "pacienteId" : this.form.pacienteId,
+                "token"      : this.form.token   
+            };
+            axios.delete("https://api.solodata.es/pacientes", { header : enviar})
+            .then( datos => {
+                console.log(datos);
+            })
         }
     },
     mounted:function() {
